@@ -61,19 +61,6 @@ namespace AgregatorNS
 			Initialize("http://localhost", "User1", "VeryBigSecret", "001", "certificate1", "321");
 		}
 
-		//		using System.Web.Script.Serialization;
-
-		//internal sealed class Program
-		//	{
-		//		static void Main()
-		//		{
-		//			String json = File.ReadAllText(@"C:\source.json");
-
-		//			var des = new JavaScriptSerializer().Deserialize<dynamic>(json);
-		//			Console.WriteLine(des["list"][0]["photo"]["url"]);
-		//		}
-		//	}
-
 		public override CheckResponse Check(int providerProductId, string jsonFields)
 		{
 			CheckResponse checkResponse = new CheckResponse();
@@ -84,7 +71,7 @@ namespace AgregatorNS
 			dictionary.Add("IdService", providerProductId.ToString());
 			//Parse json fields
 
-			HttpContent content = new FormUrlEncodedContent(dictionary);
+			//HttpContent content = new FormUrlEncodedContent(dictionary);
 
 			Encoding win1251 = Encoding.GetEncoding(1251);
 			HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, Url);
@@ -136,7 +123,7 @@ namespace AgregatorNS
 				checkResponse.ErrorMessage = e.Message;
 			}
 
-			content.Dispose();
+			//content.Dispose();
 			return checkResponse;
 		}
 
