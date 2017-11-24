@@ -17,7 +17,7 @@ namespace AgregatorTests
 		public void TestCheckResponseClass()
 		{
 			bool status = true;
-			CheckResponse cr = new CheckResponse() { Status = status };
+			CheckResponse cr = new CheckResponse() { ErrorCode="Error", ErrorMessage="ErrMessage",Status = status  };
 
 			Assert.IsNull(cr.ErrorCode, "Порушена залежність CheckResponse.errorCode від CheckResponse.status");
 			Assert.IsNull(cr.ErrorMessage, "Порушена залежність CheckResponse.errorMessage від CheckResponse.status");

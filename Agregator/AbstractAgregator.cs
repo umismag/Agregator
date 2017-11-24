@@ -76,7 +76,7 @@ namespace AgregatorNS
 			set
 			{
 				status = value;
-				if (status)
+				if (value)
 				{
 					ErrorCode = null;
 					ErrorMessage = null;

@@ -81,7 +81,7 @@ namespace RequestData
 		{
 			string res;
 			Encoding win1251 = Encoding.GetEncoding(1251);
-			XmlSerializer xmlserializer = new XmlSerializer(typeof(Data));
+			XmlSerializer xmlserializer = new XmlSerializer(obj.GetType());
 			byte[] bytes;
 			char[] chars;
 

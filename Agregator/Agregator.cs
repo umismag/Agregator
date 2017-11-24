@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using RequestData;
 
 namespace AgregatorNS
@@ -54,7 +55,7 @@ namespace AgregatorNS
 			set => certificatePassword = value;
 		}
 
-		HttpClient httpClient = new HttpClient();
+		HttpClient httpClient = null;
 
 		public NewAgregator()
 		{
@@ -71,14 +72,34 @@ namespace AgregatorNS
 			dictionary.Add("IdService", providerProductId.ToString());
 			//Parse json fields
 
-			//HttpContent content = new FormUrlEncodedContent(dictionary);
-
 			Encoding win1251 = Encoding.GetEncoding(1251);
 			HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, Url);
 			httpRequestMessage.Content = new StringContent(jsonFields, win1251);
+			httpRequestMessage.Version = HttpVersion.Version10;
 
 			try
 			{
+				X509Certificate2 store = null;
+				try
+				{
+					store = new X509Certificate2("certificate.pem");
+				}
+				catch(Exception e)
+				{
+					//
+				}
+
+				var clientHandler = new WebRequestHandler();
+				clientHandler.ClientCertificates.Add(store);
+				clientHandler.UseDefaultCredentials = true;
+
+				httpClient = new HttpClient(clientHandler);
+				var uri = new Uri(Url);
+				httpClient.BaseAddress = uri;
+
+				System.Net.Security.SslStream sslStream = new System.Net.Security.SslStream(httpClient.GetStreamAsync(Url).Result);
+				sslStream.AuthenticateAsClient(Url);
+
 				using (HttpResponseMessage responseMessage = httpClient.SendAsync(httpRequestMessage).Result)
 				{
 					if (responseMessage.IsSuccessStatusCode)
