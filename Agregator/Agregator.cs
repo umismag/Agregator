@@ -75,30 +75,30 @@ namespace AgregatorNS
 			Encoding win1251 = Encoding.GetEncoding(1251);
 			HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, Url);
 			httpRequestMessage.Content = new StringContent(jsonFields, win1251);
-			httpRequestMessage.Version = HttpVersion.Version10;
+			//httpRequestMessage.Version = HttpVersion.Version10;
 
 			try
 			{
-				X509Certificate2 store = null;
-				try
-				{
-					store = new X509Certificate2("certificate.pem");
-				}
-				catch(Exception e)
-				{
-					//
-				}
+				//X509Certificate2 store = null;
+				//try
+				//{
+				//	store = new X509Certificate2("certificate.pem");
+				//}
+				//catch(Exception e)
+				//{
+				//	//
+				//}
 
-				var clientHandler = new WebRequestHandler();
-				clientHandler.ClientCertificates.Add(store);
-				clientHandler.UseDefaultCredentials = true;
+				//var clientHandler = new WebRequestHandler();
+				//clientHandler.ClientCertificates.Add(store);
+				//clientHandler.UseDefaultCredentials = true;
 
-				httpClient = new HttpClient(clientHandler);
-				var uri = new Uri(Url);
-				httpClient.BaseAddress = uri;
+				httpClient = new HttpClient(/*clientHandler*/);
+				//var uri = new Uri(Url);
+				//httpClient.BaseAddress = uri;
 
-				System.Net.Security.SslStream sslStream = new System.Net.Security.SslStream(httpClient.GetStreamAsync(Url).Result);
-				sslStream.AuthenticateAsClient(Url);
+				//System.Net.Security.SslStream sslStream = new System.Net.Security.SslStream(httpClient.GetStreamAsync(Url).Result);
+				//sslStream.AuthenticateAsClient(Url);
 
 				using (HttpResponseMessage responseMessage = httpClient.SendAsync(httpRequestMessage).Result)
 				{

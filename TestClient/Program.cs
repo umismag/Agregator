@@ -31,9 +31,10 @@ namespace TestClient
 
 			//Console.WriteLine(Serialization.Obj2XMLstring(data));
 
-			(agr as NewAgregator).Url = "https://10.1.1.1:9999/FlashPayX";
+			(agr as NewAgregator).Url = "http://10.1.1.1:9999/FlashPayX/";
 
-			// ;http://www.albahari.com/EchoPost.aspx";
+			// "http://www.albahari.com/EchoPost.aspx";
+			//
 			//"https://httpbin.org/post";
 			//  "https://requestb.in/1asblx81";
 			//"https://212.42.94.131:9999/FlashPayX/"; 
